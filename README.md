@@ -260,13 +260,3 @@ public class Main {
    - `Alt + Shift + F`: Formatar código
 
 ---
-
-## 🎯 Próximos Passos
-
-Agora que seu ambiente está configurado, você pode:
-- ✅ Criar seus primeiros programas Java
-- ✅ Explorar conceitos de programação orientada a objetos
-- ✅ Praticar com exercícios e desafios
-- ✅ Desenvolver projetos mais complexos
-
-**Bons estudos e boa programação! 🚀**
