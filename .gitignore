@@ -1,5 +1,7 @@
 # Ignorar todas as pastas exceto ResQuestionarios
 *
+teste/
+teste/** 
 !.gitignore
 !ResQuestionarios/
 !ResQuestionarios/**
