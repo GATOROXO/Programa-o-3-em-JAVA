@@ -14,7 +14,7 @@ Este guia completo irá orientá-lo na instalação e configuração do Java Dev
 
 1. Acesse o site oficial do Oracle Java: [https://www.oracle.com/java/technologies/downloads/](https://www.oracle.com/java/technologies/downloads/)
 2. Na página, localize a seção **Java SE Development Kit**
-3. Escolha a versão mais recente do JDK (recomendado: JDK 17 ou superior)
+3. Escolha a versão mais recente do JDK (recomendado: JDK 25 ou superior)
 
 ### 1.2 Download do instalador
 
@@ -68,7 +68,7 @@ As variáveis de ambiente permitem que o sistema operacional localize o Java em 
 2. Configure a nova variável:
    - **Nome da variável**: `JAVA_HOME`
    - **Valor da variável**: Cole o caminho onde o JDK foi instalado
-     - Exemplo: `C:\Program Files\Java\jdk-17`
+     - Exemplo: `C:\Program Files\Java\jdk-25`
      - **ATENÇÃO**: Use o caminho EXATO da sua instalação (anotado no Passo 2.2)
 3. Clique em **OK**
 
@@ -100,9 +100,9 @@ java -version
 
 **Saída esperada** (exemplo):
 ```
-java version "17.0.x" 2023-xx-xx LTS
-Java(TM) SE Runtime Environment (build 17.0.x+xx-LTS-xxx)
-Java HotSpot(TM) 64-Bit Server VM (build 17.0.x+xx-LTS-xxx, mixed mode, sharing)
+java version "25.0.x" 2025-xx-xx LTS
+Java(TM) SE Runtime Environment (build 25.0.x+xx-LTS-xxx)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.x+xx-LTS-xxx, mixed mode, sharing)
 ```
 
 Agora verifique o compilador Java:
@@ -113,7 +113,7 @@ javac -version
 
 **Saída esperada** (exemplo):
 ```
-javac 17.0.x
+javac 25.0.x
 ```
 
 ✅ Se ambos os comandos exibirem as versões, **a instalação foi bem-sucedida!**
@@ -225,7 +225,7 @@ public class Main {
 4. Adicione manualmente o caminho do JDK:
 ```json
 {
-    "java.home": "C:\\Program Files\\Java\\jdk-17"
+    "java.home": "C:\\Program Files\\Java\\jdk-25"
 }
 ```
 5. Salve e reinicie o VS Code
