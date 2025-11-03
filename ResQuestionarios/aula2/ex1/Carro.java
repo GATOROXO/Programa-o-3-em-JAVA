@@ -1,4 +1,4 @@
-package ResQuestionarios.aula2;
+package ResQuestionarios.aula2.ex1;
 
 public class Carro {
     

@@ -1,4 +1,4 @@
-package ResQuestionarios.aula2;
+package ResQuestionarios.aula2.ex3;
 
 import java.util.Iterator;
 import java.util.ArrayList;

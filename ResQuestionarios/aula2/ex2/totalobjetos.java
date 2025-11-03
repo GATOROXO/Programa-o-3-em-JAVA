@@ -1,4 +1,4 @@
-package ResQuestionarios.aula2;
+package ResQuestionarios.aula2.ex2;
 
 public class totalobjetos {
     private static int id;
