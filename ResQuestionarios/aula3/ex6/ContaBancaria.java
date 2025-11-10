@@ -6,7 +6,7 @@ import java.util.Objects;
 // para verificar o funcionamento do toString().
 
 public class ContaBancaria {
-    private String numero;
+    private final String numero;
     @Override
     public boolean equals(Object o){
         if(o == null){
