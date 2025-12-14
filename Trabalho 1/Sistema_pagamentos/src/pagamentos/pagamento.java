@@ -23,6 +23,7 @@ public abstract class pagamento {
     //mensagem de erro por valor insuficiente
     public boolean sem_saldo(){
         System.out.println("Sem saldo do remetente para o destinatario");
+        return false;
     }
     
     //metodo abstrato que sera implementado nas classes filhas...

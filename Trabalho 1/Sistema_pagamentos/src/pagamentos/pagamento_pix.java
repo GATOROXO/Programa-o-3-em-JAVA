@@ -23,7 +23,7 @@ public class pagamento_pix extends pagamento {
             float novo_saldo_destinatario = destinatario.getSaldo() + this.valor;
             remetente.setSaldo(novo_saldo_remetente);
             destinatario.setSaldo(novo_saldo_destinatario);
-            // Devo criar a saida , talvez eu crie um recibo para cada pagamento
+            System.out.println("\nPagamento Concluido!\nRemetente: "+ remetente.getcpf() + "\nDestinatario: "+ destinatario.getcpf() + "\nValor : "+ this.valor+"R$");
             return true;
         }
     }

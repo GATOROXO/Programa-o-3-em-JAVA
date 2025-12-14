@@ -1,8 +1,12 @@
 package contabancarias;
 
+import java.util.ArrayList;
+import pagamentos.pagamento_cartao;
+
 public class ContaCorrente {
     private float Saldo;
     private String cpf;
+    private ArrayList <pagamento_cartao> faturas;
 
     public ContaCorrente(){
         this.Saldo = 0.0f;
