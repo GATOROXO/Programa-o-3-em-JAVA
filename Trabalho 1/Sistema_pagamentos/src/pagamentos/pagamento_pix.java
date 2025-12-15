@@ -1,13 +1,12 @@
 package pagamentos;
 
 import contabancarias.ContaCorrente;
-import java.io.IOException;
 
 public class pagamento_pix extends pagamento {
 
-    public pagamento_pix() throws IOException {
-        super();  //chama o construtor vazio da classe pai que lança IOException
-    } 
+    public pagamento_pix() {
+        super();
+    }
 
     public pagamento_pix(float uvalor) {
         super(uvalor);

@@ -1,7 +1,6 @@
 package pagamentos;
 
 import contabancarias.ContaCorrente;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class pagamento_cartao extends pagamento{
@@ -9,21 +8,18 @@ public class pagamento_cartao extends pagamento{
     private float limiteCartao = 800; // limite total do cartão
     private float limiteDisponivel = 800; // controla o limite disponivel no momento
 
-    public pagamento_cartao()throws IOException{
-        super(0);
+    public pagamento_cartao(){
         this.parcelas = new ArrayList<>();
     }
 
-    public pagamento_cartao(float ufatura, float uqtd)throws IOException{
-        super(0);
+    public pagamento_cartao(float ufatura, float uqtd){
         this.parcelas = new ArrayList<>();
         for(int i=0; i<uqtd; i++){
             this.parcelas.add(ufatura/uqtd);
         }
     }
 
-    public pagamento_cartao(float ufatura)throws IOException{
-        super(0);
+    public pagamento_cartao(float ufatura){
         this.parcelas = new ArrayList<>();
         this.parcelas.add(ufatura);
     }

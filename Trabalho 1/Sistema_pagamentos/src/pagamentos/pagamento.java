@@ -1,14 +1,12 @@
 package pagamentos;
 
 import contabancarias.ContaCorrente;
-import java.io.IOException;
 
 public abstract class pagamento {
     protected static int ID = 1;
     protected float valor;
 
-    public pagamento() throws IOException {
-        throw new IOException("Não é possivel usar construtor sem argumentos.");
+    protected pagamento() {
     }
 
     public pagamento(float uvalor){
