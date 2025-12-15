@@ -1,7 +1,6 @@
 package pagamentos;
 
 import contabancarias.ContaCorrente;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -9,12 +8,12 @@ import java.util.Scanner;
 public class App {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static void pause() {
+    private static void pausar() {
         System.out.print("\nPressione ENTER para continuar...");
         scanner.nextLine();
     }
 
-    private static String readNonEmpty(String prompt) {
+    private static String lerTextoNaoVazio(String prompt) {
         while (true) {
             System.out.print(prompt);
             String value = scanner.nextLine().trim();
@@ -25,9 +24,9 @@ public class App {
         }
     }
 
-    private static String readCpf(String prompt) {
+    private static String lerCpf(String prompt) {
         while (true) {
-            String cpf = readNonEmpty(prompt).replaceAll("\\D", "");
+            String cpf = lerTextoNaoVazio(prompt).replaceAll("\\D", "");
             if (cpf.length() == 11) {
                 return cpf;
             }
@@ -35,7 +34,7 @@ public class App {
         }
     }
 
-    private static float readPositiveFloat(String prompt) {
+    private static float lerFloatPositivo(String prompt) {
         while (true) {
             System.out.print(prompt);
             String raw = scanner.nextLine().trim().replace(',', '.');
@@ -51,7 +50,7 @@ public class App {
         }
     }
 
-    private static int readIntInRange(String prompt, int min, int max) {
+    private static int lerInteiroNoIntervalo(String prompt, int min, int max) {
         while (true) {
             System.out.print(prompt);
             String raw = scanner.nextLine().trim();
@@ -67,7 +66,7 @@ public class App {
         }
     }
 
-    private static ContaCorrente getContaOrNull(Map<String, ContaCorrente> contas, String cpf) {
+    private static ContaCorrente obterContaOuNulo(Map<String, ContaCorrente> contas, String cpf) {
         return contas.get(cpf);
     }
 
@@ -82,7 +81,7 @@ public class App {
         }
     }
 
-    private static void menuContas(Map<String, ContaCorrente> contas) {
+    private static void gerenciarContas(Map<String, ContaCorrente> contas) {
         while (true) {
             System.out.println("\n=== MENU CONTAS ===");
             System.out.println("1) Criar conta");
@@ -91,10 +90,10 @@ public class App {
             System.out.println("4) Depositar (crédito em conta)");
             System.out.println("0) Voltar");
 
-            int op = readIntInRange("Escolha: ", 0, 4);
+            int op = lerInteiroNoIntervalo("Escolha: ", 0, 4);
             switch (op) {
                 case 1: {
-                    String cpf = readCpf("CPF (11 dígitos): ");
+                    String cpf = lerCpf("CPF (11 dígitos): ");
                     if (contas.containsKey(cpf)) {
                         System.out.println("Já existe conta para esse CPF.");
                         break;
@@ -127,8 +126,8 @@ public class App {
                     listarContas(contas);
                     break;
                 case 3: {
-                    String cpf = readCpf("CPF: ");
-                    ContaCorrente conta = getContaOrNull(contas, cpf);
+                    String cpf = lerCpf("CPF: ");
+                    ContaCorrente conta = obterContaOuNulo(contas, cpf);
                     if (conta == null) {
                         System.out.println("Conta não encontrada.");
                         break;
@@ -137,13 +136,13 @@ public class App {
                     break;
                 }
                 case 4: {
-                    String cpf = readCpf("CPF: ");
-                    ContaCorrente conta = getContaOrNull(contas, cpf);
+                    String cpf = lerCpf("CPF: ");
+                    ContaCorrente conta = obterContaOuNulo(contas, cpf);
                     if (conta == null) {
                         System.out.println("Conta não encontrada.");
                         break;
                     }
-                    float valor = readPositiveFloat("Valor do depósito: ");
+                    float valor = lerFloatPositivo("Valor do depósito: ");
                     conta.setSaldo(conta.getSaldo() + valor);
                     System.out.println("Depósito realizado. Novo saldo: " + conta.getSaldo() + " R$");
                     break;
@@ -151,11 +150,11 @@ public class App {
                 case 0:
                     return;
             }
-            pause();
+            pausar();
         }
     }
 
-    private static void menuPagamentos(Map<String, ContaCorrente> contas, Map<String, pagamento_cartao> cartoes) {
+    private static void gerenciarPagamentos(Map<String, ContaCorrente> contas, Map<String, pagamento_cartao> cartoes) {
         while (true) {
             System.out.println("\n=== MENU PAGAMENTOS ===");
             System.out.println("1) PIX (transferência entre contas)");
@@ -167,26 +166,26 @@ public class App {
             System.out.println("7) Cartão: definir limite");
             System.out.println("0) Voltar");
 
-            int op = readIntInRange("Escolha: ", 0, 7);
+            int op = lerInteiroNoIntervalo("Escolha: ", 0, 7);
             switch (op) {
                 case 1: {
                     if (contas.size() < 2) {
                         System.out.println("Crie pelo menos 2 contas antes de pagar.");
                         break;
                     }
-                    String cpfRem = readCpf("CPF remetente: ");
-                    String cpfDes = readCpf("CPF destinatário: ");
+                    String cpfRem = lerCpf("CPF remetente: ");
+                    String cpfDes = lerCpf("CPF destinatário: ");
                     if (cpfRem.equals(cpfDes)) {
                         System.out.println("Remetente e destinatário devem ser diferentes.");
                         break;
                     }
-                    ContaCorrente remetente = getContaOrNull(contas, cpfRem);
-                    ContaCorrente destinatario = getContaOrNull(contas, cpfDes);
+                    ContaCorrente remetente = obterContaOuNulo(contas, cpfRem);
+                    ContaCorrente destinatario = obterContaOuNulo(contas, cpfDes);
                     if (remetente == null || destinatario == null) {
                         System.out.println("Conta remetente ou destinatária não encontrada.");
                         break;
                     }
-                    float valor = readPositiveFloat("Valor do PIX: ");
+                    float valor = lerFloatPositivo("Valor do PIX: ");
                     pagamento_pix pix = new pagamento_pix(valor);
                     pix.processar(remetente, destinatario);
                     break;
@@ -196,19 +195,19 @@ public class App {
                         System.out.println("Crie pelo menos 2 contas antes de pagar.");
                         break;
                     }
-                    String cpfRem = readCpf("CPF pagador (remetente): ");
-                    String cpfDes = readCpf("CPF recebedor (destinatário): ");
+                    String cpfRem = lerCpf("CPF pagador (remetente): ");
+                    String cpfDes = lerCpf("CPF recebedor (destinatário): ");
                     if (cpfRem.equals(cpfDes)) {
                         System.out.println("Pagador e recebedor devem ser diferentes.");
                         break;
                     }
-                    ContaCorrente remetente = getContaOrNull(contas, cpfRem);
-                    ContaCorrente destinatario = getContaOrNull(contas, cpfDes);
+                    ContaCorrente remetente = obterContaOuNulo(contas, cpfRem);
+                    ContaCorrente destinatario = obterContaOuNulo(contas, cpfDes);
                     if (remetente == null || destinatario == null) {
                         System.out.println("Conta remetente ou destinatária não encontrada.");
                         break;
                     }
-                    float valor = readPositiveFloat("Valor do boleto: ");
+                    float valor = lerFloatPositivo("Valor do boleto: ");
                     pagamento_boleto boleto = new pagamento_boleto(valor);
                     boleto.processar(remetente, destinatario);
                     break;
@@ -218,20 +217,20 @@ public class App {
                         System.out.println("Crie pelo menos 2 contas antes de pagar.");
                         break;
                     }
-                    String cpfCli = readCpf("CPF cliente (quem compra): ");
-                    String cpfLoja = readCpf("CPF destinatário (loja/recebedor): ");
+                    String cpfCli = lerCpf("CPF cliente (quem compra): ");
+                    String cpfLoja = lerCpf("CPF destinatário (loja/recebedor): ");
                     if (cpfCli.equals(cpfLoja)) {
                         System.out.println("Cliente e destinatário devem ser diferentes.");
                         break;
                     }
-                    ContaCorrente cliente = getContaOrNull(contas, cpfCli);
-                    ContaCorrente loja = getContaOrNull(contas, cpfLoja);
+                    ContaCorrente cliente = obterContaOuNulo(contas, cpfCli);
+                    ContaCorrente loja = obterContaOuNulo(contas, cpfLoja);
                     if (cliente == null || loja == null) {
                         System.out.println("Conta do cliente ou do destinatário não encontrada.");
                         break;
                     }
-                    float valorTotal = readPositiveFloat("Valor total da compra: ");
-                    int qtdParcelas = readIntInRange("Quantidade de parcelas (1 a 24): ", 1, 24);
+                    float valorTotal = lerFloatPositivo("Valor total da compra: ");
+                    int qtdParcelas = lerInteiroNoIntervalo("Quantidade de parcelas (1 a 24): ", 1, 24);
 
                     pagamento_cartao cartao = cartoes.get(cpfCli);
                     if (cartao == null) {
@@ -248,7 +247,7 @@ public class App {
                     break;
                 }
                 case 4: {
-                    String cpfCli = readCpf("CPF cliente: ");
+                    String cpfCli = lerCpf("CPF cliente: ");
                     pagamento_cartao cartao = cartoes.get(cpfCli);
                     if (cartao == null) {
                         System.out.println("Cliente não possui cartão criado (faça uma compra no crédito primeiro).");
@@ -258,8 +257,8 @@ public class App {
                     break;
                 }
                 case 5: {
-                    String cpfCli = readCpf("CPF cliente: ");
-                    ContaCorrente cliente = getContaOrNull(contas, cpfCli);
+                    String cpfCli = lerCpf("CPF cliente: ");
+                    ContaCorrente cliente = obterContaOuNulo(contas, cpfCli);
                     if (cliente == null) {
                         System.out.println("Conta não encontrada.");
                         break;
@@ -271,7 +270,7 @@ public class App {
                     }
                     System.out.println("\nFatura atual:");
                     cartao.getMSGfatura();
-                    int idx = readIntInRange("Índice da parcela para pagar: ", 0, Integer.MAX_VALUE);
+                    int idx = lerInteiroNoIntervalo("Índice da parcela para pagar: ", 0, Integer.MAX_VALUE);
                     try {
                         boolean ok = cartao.processar(cliente, idx);
                         if (!ok) {
@@ -283,8 +282,8 @@ public class App {
                     break;
                 }
                 case 6: {
-                    String cpfCli = readCpf("CPF cliente: ");
-                    ContaCorrente cliente = getContaOrNull(contas, cpfCli);
+                    String cpfCli = lerCpf("CPF cliente: ");
+                    ContaCorrente cliente = obterContaOuNulo(contas, cpfCli);
                     if (cliente == null) {
                         System.out.println("Conta não encontrada.");
                         break;
@@ -301,7 +300,7 @@ public class App {
                     break;
                 }
                 case 7: {
-                    String cpfCli = readCpf("CPF cliente: ");
+                    String cpfCli = lerCpf("CPF cliente: ");
                     pagamento_cartao cartao = cartoes.get(cpfCli);
                     if (cartao == null) {
                         try {
@@ -312,7 +311,7 @@ public class App {
                             break;
                         }
                     }
-                    float limite = readPositiveFloat("Novo limite do cartão: ");
+                    float limite = lerFloatPositivo("Novo limite do cartão: ");
                     try {
                         cartao.definirLimiteCartao(limite);
                         System.out.println("Limite definido com sucesso.");
@@ -324,7 +323,7 @@ public class App {
                 case 0:
                     return;
             }
-            pause();
+            pausar();
         }
     }
 
@@ -340,13 +339,13 @@ public class App {
             System.out.println("2) Pagamentos");
             System.out.println("0) Sair");
 
-            int op = readIntInRange("Escolha: ", 0, 2);
+            int op = lerInteiroNoIntervalo("Escolha: ", 0, 2);
             switch (op) {
                 case 1:
-                    menuContas(contas);
+                    gerenciarContas(contas);
                     break;
                 case 2:
-                    menuPagamentos(contas, cartoes);
+                    gerenciarPagamentos(contas, cartoes);
                     break;
                 case 0:
                     System.out.println("Encerrando...");
